@@ -35,7 +35,7 @@ Ensure your CSV file contains user logins in the correct format. The program wil
 
 **Usage**
 
-* **CSV Format**: The CSV file should contain one user login per line in the following format: username@domain.
+* **CSV Format**: The CSV file should contain one user login per line in the following format: **username@domain.local**
 * **Password**: The password you provide will be used for all login attempts.
 
 
@@ -75,5 +75,5 @@ Ensure your CSV file contains user logins in the correct format. The program wil
 Убедитесь, что ваш CSV-файл содержит логины пользователей в правильном формате. Программа будет обрабатывать эти логины с использованием указанного вами пароля.
 
 **Использование**
-Формат CSV: Файл CSV должен содержать один логин пользователя на строку в следующем формате: username@domain.
-Пароль: Пароль, который вы укажете, будет использоваться для всех попыток входа.
+Формат CSV должен содержать один логин пользователя на строку в следующем формате: **username@domain.local**
+Пароль: который вы укажете, будет использоваться для всех попыток входа.
