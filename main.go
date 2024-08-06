@@ -62,9 +62,9 @@ func main() {
 
 	for result := range results {
 		if result.Success {
-			writeLog(successLogFile, result.User, result.Password)
+			writeLog(successLogFile, result.User, result.Password, "Успех")
 		} else {
-			writeLog(failureLogFile, result.User, result.Password)
+			writeLog(failureLogFile, result.User, result.Password, "Неудача")
 		}
 	}
 
@@ -123,23 +123,18 @@ func readUsersFromCSV(filePath string) ([]string, error) {
 }
 
 func connectToNetworkShare(user, password string) bool {
-	// Команда для подключения к сетевой папке \\xx\xxxxxx
-	// Добавить в строку 128 между "use," и "/user:domain.local\\"
-	// "\\\\xx\\xxxx",
-
-	//В строку: /user:DomainName.local\\ пишем название домена
-	// Заменяем test.local на наш домен
-	cmd := exec.Command("net", "use", "/user:test.local\\"+user, password)
+	// Команда для подключения к сетевой папке \\dc\NETLOGON
+	cmd := exec.Command("net", "use", "\\\\dc\\net", "/user:domain.local\\"+user, password)
 	err := cmd.Run()
 	if err != nil {
-		fmt.Println("Ошибка подключения:", err)
+		fmt.Printf("Ошибка подключения для пользователя %s: %v\n", user, err)
 		return false
 	}
 	return true
 }
 
-func writeLog(file *os.File, user, password string) {
-	message := fmt.Sprintf("Пользователь: %s, Пароль: %s\n", user, password)
+func writeLog(file *os.File, user, password, status string) {
+	message := fmt.Sprintf("Пользователь: %s, Пароль: %s, Статус: %s\n", user, password, status)
 	if _, err := file.WriteString(message); err != nil {
 		fmt.Println("Ошибка записи в файл журнала:", err)
 	}
@@ -148,7 +143,8 @@ func writeLog(file *os.File, user, password string) {
 func clearCache() {
 	// Команда для очистки всех подключений
 	cmd := exec.Command("net", "use", "*", "/delete", "/y")
-	if err := cmd.Run(); err != nil {
+	err := cmd.Run()
+	if err != nil {
 		fmt.Println("Ошибка очистки кеша:", err)
 	}
 }
