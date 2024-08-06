@@ -124,7 +124,7 @@ func readUsersFromCSV(filePath string) ([]string, error) {
 
 func connectToNetworkShare(user, password string) bool {
 	// Команда для подключения к сетевой папке \\xx\xxxxxx
-	// Добавить в строку 128 между "use," и "/user:systemlink.local\\"
+	// Добавить в строку 128 между "use," и "/user:domain.local\\"
 	// "\\\\xx\\xxxx",
 
 	//В строку: /user:DomainName.local\\ пишем название домена
